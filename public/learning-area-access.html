@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0B2F4A">
+  <title>Learning Area Access | Data Science</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:#0B2F4A; --navy-2:#143E5F; --navy-3:#1E4C6F; --cyan:#C9A86A; --cyan-dark:#A9854D; --cyan-soft:#F3E8D5;
+      --white:#fff; --muted:#5B6672; --border:#D9DEE3; --light:#EEF1F3;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body {
+      font-family:'Sora',Arial,sans-serif; color:var(--navy); min-height:100vh;
+      background:
+        radial-gradient(900px 500px at 85% -10%, rgba(201,168,106,.25), transparent 60%),
+        radial-gradient(700px 480px at -10% 110%, rgba(201,168,106,.14), transparent 60%),
+        linear-gradient(160deg, var(--navy), var(--navy-2));
+    }
+    .access-page { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px 16px; }
+    .access-card { width:min(520px,100%); background:var(--white); border-radius:22px; border-top:5px solid var(--cyan); box-shadow:0 30px 70px rgba(2,10,28,.45); padding:34px 30px 28px; }
+    .access-logo { display:block; width:74px; height:74px; object-fit:cover; border-radius:50%; margin:0 auto 14px; border:3px solid var(--cyan-soft); box-shadow:0 0 0 2px var(--cyan); }
+    .eyebrow { text-align:center; font-size:.72rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--cyan-dark); }
+    h1 { text-align:center; font-size:clamp(1.5rem,5vw,1.9rem); margin:6px 0 8px; }
+    .lead { text-align:center; color:var(--muted); font-size:.92rem; line-height:1.7; margin-bottom:22px; }
+
+    .toggle { display:grid; grid-template-columns:1fr 1fr; gap:6px; padding:5px; background:var(--light); border-radius:999px; margin-bottom:22px; }
+    .toggle button { padding:12px 10px; border:0; border-radius:999px; background:transparent; color:var(--navy); font:inherit; font-weight:700; font-size:.92rem; cursor:pointer; transition:background .2s,color .2s; display:flex; align-items:center; justify-content:center; gap:8px; }
+    .toggle button.active { background:var(--navy); color:var(--white); box-shadow:0 6px 14px rgba(11,29,58,.25); }
+    .toggle button:not(.active):hover { background:rgba(201,168,106,.18); }
+    .toggle button:focus-visible, .act:focus-visible { outline:3px solid var(--cyan); outline-offset:2px; }
+
+    .panel[hidden] { display:none; }
+    .panel { display:grid; gap:14px; }
+    .option { border:1px solid var(--border); border-radius:16px; padding:18px; background:var(--white); }
+    .option h3 { font-size:1rem; display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+    .option h3 i { color:var(--cyan); }
+    .option p { color:var(--muted); font-size:.88rem; line-height:1.65; margin-bottom:14px; }
+    .act { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:13px 16px; border-radius:12px; font:inherit; font-weight:800; font-size:.95rem; text-decoration:none; border:2px solid transparent; transition:background .2s,color .2s,border-color .2s,transform .15s; }
+    .act:hover { transform:translateY(-1px); }
+    .act-login  { background:var(--navy); color:var(--white); }
+    .act-login:hover { background:var(--cyan); color:var(--navy); }
+    .act-signup { background:var(--white); color:var(--navy); border-color:var(--cyan); }
+    .act-signup:hover { background:var(--cyan); color:var(--navy); }
+    .act-admin  { background:var(--navy); color:var(--white); }
+    .act-admin:hover { background:var(--cyan); color:var(--navy); }
+
+    .back { display:block; text-align:center; margin-top:20px; font-size:.86rem; color:var(--muted); text-decoration:none; }
+    .back:hover { color:var(--cyan-dark); }
+
+    @media (max-width:480px) {
+      .access-card { padding:26px 18px 22px; border-radius:18px; }
+      .option { padding:16px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="access-page">
+    <section class="access-card">
+      <img class="access-logo" src="logo.jpg" alt="Department logo">
+      <div class="eyebrow">Learning Area Access</div>
+      <h1>Who are you?</h1>
+      <p class="lead">Choose how you want to enter the Learning Area. Students can log in, or sign up if this is their first visit.</p>
+
+      <div class="toggle" role="tablist" aria-label="Account type">
+        <button id="studentBtn" class="active" type="button" role="tab" aria-selected="true" aria-controls="studentPanel"><i class="fas fa-user-graduate"></i> Student</button>
+        <button id="adminBtn" type="button" role="tab" aria-selected="false" aria-controls="adminPanel"><i class="fas fa-user-shield"></i> Admin</button>
+      </div>
+
+      <div class="panel" id="studentPanel" role="tabpanel">
+        <div class="option">
+          <h3><i class="fas fa-right-to-bracket"></i> Student Login</h3>
+          <p>Already registered? Sign in to access course materials, announcements, live classes and your full course structure.</p>
+          <a href="login.html" class="act act-login"><i class="fas fa-right-to-bracket"></i> Log In as Student</a>
+        </div>
+        <div class="option">
+          <h3><i class="fas fa-user-plus"></i> Student Sign Up</h3>
+          <p>First time here? Create your account with your approved registration number and a verified Nigerian phone number.</p>
+          <a href="register.html" class="act act-signup"><i class="fas fa-user-plus"></i> Sign Up</a>
+        </div>
+      </div>
+
+      <div class="panel" id="adminPanel" role="tabpanel" hidden>
+        <div class="option">
+          <h3><i class="fas fa-shield-halved"></i> Staff / Admin Login</h3>
+          <p>Department staff and the HOD manage announcements, learning materials, live classes and the protected learning area here.</p>
+          <a href="admin-login.html" class="act act-admin"><i class="fas fa-right-to-bracket"></i> Admin Login</a>
+        </div>
+      </div>
+
+      <a class="back" href="programs.html"><i class="fas fa-arrow-left"></i> Back to Programmes</a>
+    </section>
+  </main>
+
+  <script>
+    const studentBtn = document.getElementById('studentBtn');
+    const adminBtn = document.getElementById('adminBtn');
+    const studentPanel = document.getElementById('studentPanel');
+    const adminPanel = document.getElementById('adminPanel');
+
+    function show(role) {
+      const isStudent = role === 'student';
+      studentBtn.classList.toggle('active', isStudent);
+      adminBtn.classList.toggle('active', !isStudent);
+      studentBtn.setAttribute('aria-selected', String(isStudent));
+      adminBtn.setAttribute('aria-selected', String(!isStudent));
+      studentPanel.hidden = !isStudent;
+      adminPanel.hidden = isStudent;
+    }
+    studentBtn.addEventListener('click', () => show('student'));
+    adminBtn.addEventListener('click', () => show('admin'));
+    if (location.hash === '#admin') show('admin');
+  </script>
+</body>
+</html>

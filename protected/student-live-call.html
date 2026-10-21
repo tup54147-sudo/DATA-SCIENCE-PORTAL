@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0B1D3A">
+  <title>Internal Live Classroom | Data Science</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/live-call.css">
+</head>
+<body class="meeting-body">
+  <div class="meeting-shell" id="meetingShell">
+
+    <!-- ===== Top bar ===== -->
+    <header class="meeting-topbar">
+      <a class="meeting-brand" href="/student/live-classes" id="backLink" aria-label="Back to live classes">
+        <img src="/logo.jpg" alt="Department logo">
+        <span><strong id="sessionTitle">Internal Live Classroom</strong><small id="sessionMeta">Loading session…</small></span>
+      </a>
+      <div class="meeting-top-status">
+        <button class="top-start" id="startSession" hidden><i class="fas fa-play"></i> <span>Start class</span></button>
+        <span class="meeting-badge" id="meetingStatus"><i class="fas fa-circle"></i> Connecting</span>
+        <span class="meeting-clock" id="meetingTimer">00:00:00</span>
+        <span class="meeting-security" id="securityState"><i class="fas fa-shield-halved"></i> Secure room</span>
+        <button class="top-icon" id="viewToggle" title="Switch between speaker view and gallery view" aria-label="Switch view"><i class="fas fa-table-cells-large"></i><span>Gallery</span></button>
+        <button class="top-icon" id="fullscreenToggle" title="Full screen" aria-label="Full screen"><i class="fas fa-expand"></i></button>
+      </div>
+    </header>
+
+    <div class="meeting-notice" id="meetingNotice" hidden role="status" aria-live="polite"></div>
+    <button class="audio-unlock" id="audioUnlock" hidden><i class="fas fa-volume-high"></i> Tap to turn on class audio</button>
+
+    <!-- ===== Stage + sidebar ===== -->
+    <main class="meeting-app" id="meetingApp">
+      <section class="stage" id="stage" data-layout="speaker">
+        <div class="stage-banner" id="stageBanner" hidden></div>
+
+        <div class="stage-main" id="stageMain">
+          <div class="meeting-empty" id="meetingEmpty">
+            <i class="fas fa-video"></i>
+            <h2>Preparing the classroom</h2>
+            <p>Please wait while we connect you.</p>
+          </div>
+
+          <div class="screen-view" id="screenView" hidden>
+            <video id="screenVideo" autoplay playsinline></video>
+            <div class="screen-self" id="screenSelf" hidden>
+              <i class="fas fa-display"></i>
+              <h3>You are sharing your screen</h3>
+              <p>Everyone in the class can see it.</p>
+              <button class="btn-danger" id="stopShareInline"><i class="fas fa-stop"></i> Stop sharing</button>
+            </div>
+            <div class="screen-label" id="screenLabel"></div>
+            <button class="screen-fit" id="screenFit" title="Fit or fill the shared screen" aria-label="Toggle fit"><i class="fas fa-up-right-and-down-left-from-center"></i></button>
+          </div>
+
+          <div class="main-slot" id="mainSlot"></div>
+          <div class="gallery-grid" id="galleryGrid"></div>
+
+          <div class="stage-badge" id="stageBadge" hidden></div>
+          <div class="gallery-nav" id="galleryNav" hidden>
+            <button id="galleryPrev" aria-label="Previous page"><i class="fas fa-chevron-left"></i></button>
+            <span id="galleryPage">1 / 1</span>
+            <button id="galleryNext" aria-label="Next page"><i class="fas fa-chevron-right"></i></button>
+          </div>
+          <div class="reaction-layer" id="reactionLayer" aria-hidden="true"></div>
+        </div>
+
+        <div class="stage-strip" id="stageStrip" aria-label="Other participants"></div>
+      </section>
+
+      <aside class="meeting-sidebar" id="meetingSidebar" aria-label="Participants and chat">
+        <div class="sidebar-tabs">
+          <button class="sidebar-tab active" data-side-tab="participants"><i class="fas fa-users"></i> <span class="tab-label">Participants</span> <b id="participantCount">0</b></button>
+          <button class="sidebar-tab" data-side-tab="chat"><i class="fas fa-message"></i> <span class="tab-label">Chat</span> <b id="chatBadge" hidden>0</b></button>
+          <button class="sidebar-close" id="sidebarClose" aria-label="Close panel"><i class="fas fa-xmark"></i></button>
+        </div>
+        <section class="sidebar-panel active" id="side-participants">
+          <div class="participant-search"><i class="fas fa-search"></i><input id="participantSearch" placeholder="Search participants" autocomplete="off"></div>
+          <div class="participant-tools" id="participantTools" hidden>
+            <button id="muteAllInline"><i class="fas fa-microphone-slash"></i> Mute all</button>
+            <button id="lowerAllHands"><i class="fas fa-hand"></i> Lower hands</button>
+          </div>
+          <div class="participant-list" id="participantsList"><div class="sidebar-empty">No participants yet.</div></div>
+        </section>
+        <section class="sidebar-panel chat-panel" id="side-chat">
+          <div class="chat-messages" id="chatMessages"><div class="sidebar-empty">Messages sent during this class appear here.</div></div>
+          <form class="chat-form" id="chatForm"><input id="chatInput" maxlength="1000" autocomplete="off" placeholder="Message everyone…"><button aria-label="Send"><i class="fas fa-paper-plane"></i></button></form>
+        </section>
+      </aside>
+    </main>
+
+    <!-- ===== Bottom toolbar ===== -->
+    <footer class="meeting-toolbar" id="meetingToolbar">
+      <div class="toolbar-group">
+        <button class="toolbar-button labeled active" id="toggleMic" aria-label="Mute"><span><i class="fas fa-microphone"></i></span><small>Mute</small></button>
+        <button class="toolbar-button labeled active" id="toggleCam" aria-label="Stop video"><span><i class="fas fa-video"></i></span><small>Stop Video</small></button>
+      </div>
+      <div class="toolbar-group">
+        <button class="toolbar-button labeled" id="toggleParticipants" aria-label="Participants"><span><i class="fas fa-users"></i><b class="count-dot" id="toolbarCount">0</b></span><small>Participants</small></button>
+        <button class="toolbar-button labeled" id="toggleChat" aria-label="Chat"><span><i class="fas fa-message"></i><b class="count-dot alert" id="toolbarChatBadge" hidden>0</b></span><small>Chat</small></button>
+        <button class="toolbar-button labeled" id="shareScreen" aria-label="Share screen"><span><i class="fas fa-arrow-up-from-bracket"></i></span><small>Share Screen</small></button>
+      </div>
+      <div class="toolbar-group secondary">
+        <button class="toolbar-button labeled" id="raiseHand" aria-label="Raise hand"><span><i class="fas fa-hand"></i></span><small>Raise Hand</small></button>
+        <button class="toolbar-button labeled" id="reactionButton" aria-label="Reactions" aria-haspopup="true"><span><i class="far fa-face-smile"></i></span><small>Reactions</small></button>
+        <button class="toolbar-button labeled" id="switchCamera" aria-label="Switch camera"><span><i class="fas fa-camera-rotate"></i></span><small>Switch Camera</small></button>
+        <button class="toolbar-button labeled" id="viewToggleBar" aria-label="Change view"><span><i class="fas fa-table-cells-large"></i></span><small>View</small></button>
+      </div>
+      <div class="toolbar-group host-only" id="hostTools" hidden>
+        <button class="toolbar-button labeled" id="securityButton" aria-label="Host controls" aria-haspopup="true"><span><i class="fas fa-user-shield"></i></span><small>Host tools</small></button>
+        <button class="toolbar-button labeled report-button" id="showAttendance" aria-label="Attendance"><span><i class="fas fa-clipboard-user"></i></span><small>Attendance</small></button>
+      </div>
+      <div class="toolbar-group more-group">
+        <button class="toolbar-button labeled" id="moreButton" aria-label="More options" aria-haspopup="true"><span><i class="fas fa-ellipsis"></i></span><small>More</small></button>
+      </div>
+      <div class="toolbar-group leave-group">
+        <button class="leave-button" id="leaveCall"><i class="fas fa-phone-slash"></i> <span>Leave</span></button>
+      </div>
+    </footer>
+
+    <!-- ===== Popovers (positioned by script; bottom sheets on phones) ===== -->
+    <div class="reaction-menu" id="reactionMenu" hidden><button>👏</button><button>👍</button><button>❤️</button><button>🎉</button><button>😂</button><button>✋</button></div>
+
+    <div class="popover host-popover" id="securityPopover" hidden>
+      <h4>Class controls</h4>
+      <label class="switch-row"><span><i class="fas fa-lock"></i> Lock room</span><input type="checkbox" id="lockToggle"></label>
+      <h4>Allow students to</h4>
+      <label class="switch-row"><span><i class="fas fa-microphone"></i> Unmute themselves</span><input type="checkbox" id="allowStudentMic"></label>
+      <label class="switch-row"><span><i class="fas fa-video"></i> Start their video</span><input type="checkbox" id="allowStudentVideo"></label>
+      <label class="switch-row"><span><i class="fas fa-arrow-up-from-bracket"></i> Share their screen</span><input type="checkbox" id="allowStudentShare"></label>
+      <div class="popover-actions">
+        <button id="muteAll"><i class="fas fa-microphone-slash"></i> Mute all students</button>
+        <button id="lowerHandsPop"><i class="fas fa-hand"></i> Lower all hands</button>
+        <button id="clearSpotlight"><i class="fas fa-thumbtack"></i> Remove spotlight</button>
+      </div>
+    </div>
+
+    <div class="popover more-popover" id="morePopover" hidden></div>
+
+    <div class="popover leave-popover" id="leavePopover" hidden>
+      <button id="leaveOnly"><i class="fas fa-arrow-right-from-bracket"></i> Leave class</button>
+      <button class="danger" id="endSession"><i class="fas fa-stop-circle"></i> End class for everyone</button>
+    </div>
+  </div>
+
+  <!-- ===== Pre-join lobby ===== -->
+  <div class="prejoin" id="prejoin">
+    <div class="prejoin-card">
+      <div class="prejoin-preview">
+        <video id="prejoinVideo" autoplay playsinline muted></video>
+        <div class="prejoin-avatar" id="prejoinAvatar"><span id="prejoinInitials">DS</span></div>
+        <div class="prejoin-toggles">
+          <button id="prejoinMic" class="on" aria-label="Microphone"><i class="fas fa-microphone"></i></button>
+          <button id="prejoinCam" class="on" aria-label="Camera"><i class="fas fa-video"></i></button>
+        </div>
+      </div>
+      <div class="prejoin-info">
+        <span class="eyebrow-light" id="prejoinCourse">LIVE CLASS</span>
+        <h1 id="prejoinTitle">Join live class</h1>
+        <p id="prejoinMessage">Check your camera and microphone, then join.</p>
+        <label class="prejoin-field">Camera<select id="prejoinCamSelect"><option value="">Default camera</option></select></label>
+        <label class="prejoin-field">Microphone<select id="prejoinMicSelect"><option value="">Default microphone</option></select></label>
+        <div class="prejoin-actions">
+          <button class="prejoin-join" id="prejoinJoin" disabled>Join class</button>
+          <a class="prejoin-back" id="prejoinBack" href="/student/live-classes">Back</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Attendance drawer (opens only when the host asks for it) ===== -->
+  <div class="drawer-backdrop" id="attendanceBackdrop" hidden>
+    <section class="attendance-drawer" id="attendanceDrawer" role="dialog" aria-modal="true" aria-labelledby="attendanceTitle">
+      <div class="drawer-head">
+        <div><span class="eyebrow">ATTENDANCE</span><h2 id="attendanceTitle">Who is in class</h2></div>
+        <button class="drawer-close" id="attendanceClose" aria-label="Close attendance"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="drawer-tabs">
+        <button class="active" data-att-tab="active">Active now <b id="activeNowCount">0</b></button>
+        <button data-att-tab="report">Attendance report</button>
+      </div>
+      <div class="drawer-body" id="attActive">
+        <div class="active-list" id="activeNowList"></div>
+      </div>
+      <div class="drawer-body" id="attReport" hidden>
+        <div class="stat-grid">
+          <article><strong id="statExpected">0</strong><span>Expected</span></article>
+          <article><strong id="statJoined">0</strong><span>Joined</span></article>
+          <article><strong id="statPresent">0</strong><span>Present</span></article>
+          <article><strong id="statAbsent">0</strong><span>Absent</span></article>
+          <article><strong id="statLate">0</strong><span>Late</span></article>
+          <article><strong id="statRate">0%</strong><span>Attendance</span></article>
+        </div>
+        <div class="report-tools">
+          <input id="reportSearch" placeholder="Search name or reg. number" autocomplete="off">
+          <button id="refreshAttendance"><i class="fas fa-rotate"></i> Refresh</button>
+          <a id="exportAttendance" href="#"><i class="fas fa-file-csv"></i> Export CSV</a>
+        </div>
+        <div class="attendance-table-wrap">
+          <table class="attendance-table">
+            <thead><tr><th>Student</th><th>Reg. number</th><th>Status</th><th>First join</th><th>Time attended</th><th>Late</th><th>Notes</th></tr></thead>
+            <tbody id="attendanceRows"><tr><td colspan="7">Open this tab to load the report.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== Per-participant action menu (shared by tiles and the participants list) ===== -->
+  <div class="float-menu" id="floatMenu" hidden role="menu"></div>
+
+  <!-- ===== Remove-student confirmation ===== -->
+  <div class="confirm-modal" id="removeModal" hidden>
+    <div class="confirm-card">
+      <div class="confirm-icon"><i class="fas fa-user-slash"></i></div>
+      <h2>Remove student?</h2>
+      <p id="removeStudentName">This student will be disconnected and blocked from rejoining this session.</p>
+      <label>Reason for removal<textarea id="removeReason" maxlength="500" placeholder="State the classroom rule that was broken."></textarea></label>
+      <div class="confirm-actions"><button id="cancelRemove">Cancel</button><button class="danger" id="confirmRemove">Remove student</button></div>
+    </div>
+  </div>
+
+  <div id="audioSink" hidden></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="/student-live-call.js"></script>
+</body>
+</html>

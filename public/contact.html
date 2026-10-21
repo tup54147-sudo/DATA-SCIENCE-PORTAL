@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | Department of Data Science, University of Uyo</title>
+<link rel="icon" type="image/jpeg" href="logo.jpg">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+  <header>
+    <nav class="main-nav">
+      <a href="index.html" class="logo-wrap">
+        <img src="logo.jpg" alt="DSSA Logo" class="logo-spin">
+        <div class="logo-text">
+          <span class="logo-main">Data Science</span>
+          <div class="logo-divider">
+            <img src="uniuyo-logo.png" alt="University of Uyo" class="header-crest">
+            <span class="logo-sub">University of Uyo</span>
+          </div>
+        </div>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a href="programs.html"><i class="fas fa-book-open"></i> Programs</a></li>
+        <li><a href="staff.html"><i class="fas fa-users"></i> Staff</a></li>
+        <li><a href="contact.html" class="nav-active"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </nav>
+  </header>
+
+  <div class="ticker-wrap">
+    <div><i class="fas fa-bullhorn"></i> NOTICE</div>
+    <div class="ticker-track">
+      <div class="ticker-content">
+        &nbsp;&nbsp;&nbsp; 2025/2026 Second Semester course registration is now open &nbsp;&nbsp;&bull;&nbsp;&nbsp; Welcome to the Department of Data Science, Faculty of Computing, University of Uyo &nbsp;&nbsp;&nbsp;
+      </div>
+    </div>
+  </div>
+
+  <div class="page-header">
+    <h1><i class="fas fa-envelope"></i> Contact Us</h1>
+    <p>Reach out to the Department of Data Science, Faculty of Computing.</p>
+  </div>
+
+  <section class="content-section fade-in">
+    <div class="section-container contact-grid">
+      <div>
+         <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="contact-text">
+            <strong>Address</strong>
+            <span>Faculty of Computing, University of Uyo, Permanent Site, Uyo, Akwa Ibom State, Nigeria</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+          <div class="contact-text">
+            <strong>Phone</strong>
+            <span>+234912345678</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <div class="contact-text">
+            <strong>Email</strong>
+            <span>datascience19@gmail.com</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-clock"></i></div>
+          <div class="contact-text">
+            <strong>Office Hours</strong>
+            <span>Monday &ndash; Friday, 8:00 AM &ndash; 4:00 PM</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2 class="section-heading-plain"><i class="fas fa-paper-plane"></i> Send a Message</h2>
+        <p style="margin-bottom:1rem;font-size:0.85rem;color:var(--gray);">This form will be fully active once the backend is connected. For now, contact us directly via phone or email above.</p>
+        <form class="contact-form">
+          <input type="text" placeholder="Your Name">
+          <input type="email" placeholder="Your Email">
+          <textarea placeholder="Your Message"></textarea>
+          <button type="button" class="btn-primary ripple-btn" style="border:none;cursor:pointer;"><i class="fas fa-paper-plane"></i> Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo.jpg" alt="DSSA Logo" class="footer-logo-img">
+        <img src="uniuyo-logo.png" alt="UNIUYO" class="footer-uniuyo-logo">
+        <div>
+          <div class="footer-logo">Department of Data Science</div>
+          <div class="footer-logo-sub">University of Uyo</div>
+        </div>
+      </div>
+      <ul class="footer-links">
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a href="programs.html"><i class="fas fa-book-open"></i> Programs</a></li>
+        <li><a href="staff.html"><i class="fas fa-users"></i> Staff</a></li>
+        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+      <div class="footer-social">
+        <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    <div class="footer-copy"><i class="fas fa-copyright"></i> Department of Data Science, Faculty of Computing, University of Uyo. All rights reserved.</div>
+  </footer>
+
+  <div class="progress-ring-wrap" id="progressRingWrap">
+    <svg class="progress-ring" viewBox="0 0 50 50">
+      <circle class="progress-ring-bg" cx="25" cy="25" r="20"/>
+      <circle class="progress-ring-fill" id="progressRingFill" cx="25" cy="25" r="20"/>
+    </svg>
+    <button class="progress-ring-btn" id="progressRingBtn"><i class="fas fa-chevron-up"></i></button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

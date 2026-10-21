@@ -1,0 +1,13 @@
+{
+  "name": "Data Science UNIUYO",
+  "short_name": "DTS UNIUYO",
+  "description": "Department of Data Science, University of Uyo",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0d3320",
+  "theme_color": "#0d3320",
+  "icons": [
+    { "src": "logo.jpg", "sizes": "192x192", "type": "image/jpeg" },
+    { "src": "logo.jpg", "sizes": "512x512", "type": "image/jpeg" }
+  ]
+}

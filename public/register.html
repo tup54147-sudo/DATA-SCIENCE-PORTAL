@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0B1D3A">
+  <title>Student Registration | Data Science</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="auth-style.css">
+</head>
+<body>
+<main class="auth-wrap">
+  <section class="auth-card auth-card-wide">
+    <img src="logo.jpg" class="auth-logo" alt="Department logo">
+    <h1>Create Student Account</h1>
+    <p class="auth-sub">Registration is available only to numbers on the department’s approved student list.</p>
+    <div id="message" class="auth-message" role="alert"></div>
+
+    <form id="registerForm" class="form-grid" novalidate>
+      <div class="span-2">
+        <label for="fullName">Full Name</label>
+        <div class="input-group"><i class="fas fa-user"></i><input id="fullName" autocomplete="name" required></div>
+      </div>
+
+      <div>
+        <label for="registrationNumber">Registration Number</label>
+        <div class="input-group"><i class="fas fa-id-card"></i><input id="registrationNumber" placeholder="25/CO/DS/001" required></div>
+      </div>
+
+      <div>
+        <label for="email">Email</label>
+        <div class="input-group"><i class="fas fa-envelope"></i><input type="email" id="email" autocomplete="email" required></div>
+      </div>
+
+      <!-- ===== Phone number with +234 prefix and SMS verification ===== -->
+      <div class="span-2">
+        <label for="phoneNumber">Phone Number (Nigeria)</label>
+        <div class="phone-row">
+          <div class="phone-field" id="phoneField">
+            <span class="phone-prefix" aria-hidden="true"><span class="flag">🇳🇬</span> +234</span>
+            <input id="phoneNumber" type="tel" inputmode="numeric" autocomplete="tel-national"
+                   placeholder="803 123 4567" maxlength="13" aria-describedby="phoneHint" required>
+            <span class="phone-state" id="phoneState" hidden><i class="fas fa-circle-check"></i> Verified</span>
+          </div>
+          <button type="button" class="btn-secondary" id="sendCode" disabled>Send code</button>
+        </div>
+        <div class="field-hint" id="phoneHint">Enter your 10-digit mobile number, e.g. 803 123 4567 (a leading 0 is fine).</div>
+
+        <div class="otp-box" id="otpBox" hidden>
+          <label for="otpCode">Verification code</label>
+          <div class="phone-row">
+            <input id="otpCode" class="otp-input" type="text" inputmode="numeric" autocomplete="one-time-code"
+                   maxlength="6" placeholder="······" aria-label="6-digit verification code">
+            <button type="button" class="btn-secondary" id="verifyCode" disabled>Verify</button>
+          </div>
+          <div class="field-hint"><span id="otpInfo">Enter the 6-digit code we sent by SMS.</span>
+            <button type="button" class="link-btn" id="resendCode" disabled>Resend code</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label for="admissionYear">Admission Year</label>
+        <select id="admissionYear" required></select>
+      </div>
+
+      <div>
+        <label for="level">Level</label>
+        <select id="level" disabled required></select>
+      </div>
+
+      <div>
+        <label for="course">Programme</label>
+        <div class="input-group"><i class="fas fa-book"></i><input id="course" value="B.Sc. Data Science"></div>
+      </div>
+
+      <div class="span-2">
+        <label for="password">Password</label>
+        <div class="input-group password-wrap">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" minlength="6" autocomplete="new-password" required>
+          <button type="button" class="password-toggle" id="togglePassword" aria-label="Show password"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+
+      <button class="span-2" type="submit" id="submitBtn" disabled><i class="fas fa-user-plus"></i> Verify phone to continue</button>
+    </form>
+
+    <p class="auth-footer">Already registered? <a href="learning-area-access.html">Log in</a></p>
+  </section>
+</main>
+
+<script type="module">
+import { api, showMessage, setupPasswordToggle } from './api.js';
+setupPasswordToggle('password', 'togglePassword');
+
+const $ = (id) => document.getElementById(id);
+const form = $('registerForm'), message = $('message');
+const phoneInput = $('phoneNumber'), phoneField = $('phoneField'), phoneState = $('phoneState'), phoneHint = $('phoneHint');
+const sendBtn = $('sendCode'), otpBox = $('otpBox'), otpInput = $('otpCode'), verifyBtn = $('verifyCode');
+const resendBtn = $('resendCode'), otpInfo = $('otpInfo'), submitBtn = $('submitBtn');
+const admissionYearInput = $('admissionYear');
+const levelInput = $('level');
+
+const currentYear = new Date().getFullYear();
+const levelMap = {
+  [currentYear]: '100L',
+  [currentYear - 1]: '200L',
+  [currentYear - 2]: '300L',
+  [currentYear - 3]: '400L'
+};
+
+let verifiedPhone = null;   // "+234XXXXXXXXXX" once the SMS code has been confirmed
+let timer = null;
+
+function expectedLevelForYear(year) {
+  const numericYear = Number(year);
+  if (!Number.isInteger(numericYear)) return null;
+  return levelMap[numericYear] || null;
+}
+
+function expectedRegPrefixForYear(year) {
+  const numericYear = Number(year);
+  if (!Number.isInteger(numericYear)) return null;
+  if (numericYear >= 2023 && numericYear <= 2026) return String(numericYear).slice(-2);
+  return null;
+}
+
+function populateAdmissionYears() {
+  const years = Array.from({ length: 4 }, (_, index) => currentYear - index).reverse();
+  admissionYearInput.innerHTML = years.map((year) => `<option value="${year}">${year}</option>`).join('');
+  admissionYearInput.value = String(currentYear);
+  updateLevelFromYear();
+}
+
+function updateLevelFromYear() {
+  const expected = expectedLevelForYear(admissionYearInput.value);
+  if (!expected) {
+    levelInput.innerHTML = '<option value="">Select year</option>';
+    levelInput.value = '';
+    levelInput.disabled = true;
+    return;
+  }
+  levelInput.innerHTML = `<option value="${expected}">${expected}</option>`;
+  levelInput.value = expected;
+  levelInput.disabled = true;
+}
+
+function validateRegNumberMatch() {
+  const year = Number(admissionYearInput.value);
+  const reg = String($('registrationNumber').value || '').trim();
+  const expectedPrefix = expectedRegPrefixForYear(year);
+  if (!expectedPrefix || !reg) return true;
+  const normalized = reg.replace(/[^0-9]/g, '');
+  const startsWithPrefix = normalized.startsWith(expectedPrefix);
+  if (!startsWithPrefix) {
+    showMessage(message, `<i class="fas fa-exclamation-circle"></i> Registration number does not match admission year. For ${year}, registration must start with ${expectedPrefix}.`, 'error');
+    return false;
+  }
+  return true;
+}
+
+admissionYearInput.addEventListener('change', updateLevelFromYear);
+$('registrationNumber').addEventListener('input', () => {
+  const year = Number(admissionYearInput.value);
+  const reg = String($('registrationNumber').value || '').trim();
+  const expectedPrefix = expectedRegPrefixForYear(year);
+  if (expectedPrefix && reg) {
+    const normalized = reg.replace(/[^0-9]/g, '');
+    const valid = normalized.startsWith(expectedPrefix);
+    const note = valid ? 'Registration number matches the selected admission year.' : `Registration number does not match admission year. For ${year}, registration must start with ${expectedPrefix}.`;
+    if (!valid) {
+      showMessage(message, `<i class="fas fa-exclamation-circle"></i> ${note}`, 'error');
+    }
+  }
+});
+
+populateAdmissionYears();
+
+// Nigerian mobile numbers: 10 digits after +234, starting 70/71, 80/81, 90/91
+const NG_MOBILE = /^[789][01]\d{8}$/;
+
+function nationalDigits() {
+  let d = phoneInput.value.replace(/\D/g, '');
+  if (d.startsWith('234')) d = d.slice(3);
+  else if (d.startsWith('0')) d = d.slice(1);
+  return d.slice(0, 10);
+}
+const fullPhone = () => '+234' + nationalDigits();
+const phoneValid = () => NG_MOBILE.test(nationalDigits());
+
+function formatDisplay(d) {            // 8031234567 -> 803 123 4567
+  return [d.slice(0, 3), d.slice(3, 6), d.slice(6, 10)].filter(Boolean).join(' ');
+}
+
+function refreshSubmit() {
+  const ok = Boolean(verifiedPhone);
+  submitBtn.disabled = !ok;
+  submitBtn.innerHTML = ok ? '<i class="fas fa-user-plus"></i> Create Account' : '<i class="fas fa-lock"></i> Verify phone to continue';
+}
+
+function setVerified(phone) {
+  verifiedPhone = phone;
+  phoneField.classList.add('is-verified'); phoneField.classList.remove('is-invalid');
+  phoneState.hidden = false; phoneInput.readOnly = true;
+  sendBtn.hidden = true; otpBox.hidden = true;
+  phoneHint.textContent = `${phone} is verified.`;
+  clearInterval(timer);
+  refreshSubmit();
+}
+
+function resetVerification() {
+  verifiedPhone = null;
+  phoneField.classList.remove('is-verified');
+  phoneState.hidden = true; phoneInput.readOnly = false; sendBtn.hidden = false;
+  refreshSubmit();
+}
+
+function startCooldown(seconds) {
+  clearInterval(timer);
+  let left = seconds;
+  resendBtn.disabled = true; sendBtn.disabled = true;
+  const tick = () => {
+    resendBtn.textContent = left > 0 ? `Resend in ${left}s` : 'Resend code';
+    if (left <= 0) { clearInterval(timer); resendBtn.disabled = false; sendBtn.disabled = !phoneValid(); }
+    left -= 1;
+  };
+  tick(); timer = setInterval(tick, 1000);
+}
+
+phoneInput.addEventListener('input', () => {
+  const d = nationalDigits();
+  phoneInput.value = formatDisplay(d);
+  const valid = phoneValid();
+  phoneField.classList.toggle('is-invalid', d.length >= 10 && !valid);
+  phoneHint.textContent = d.length >= 10 && !valid
+    ? 'That is not a valid Nigerian mobile number (it should start 70, 71, 80, 81, 90 or 91).'
+    : 'Enter your 10-digit mobile number, e.g. 803 123 4567 (a leading 0 is fine).';
+  sendBtn.disabled = !valid;
+  otpBox.hidden = true; otpInput.value = ''; verifyBtn.disabled = true;
+});
+
+sendBtn.addEventListener('click', sendCode);
+resendBtn.addEventListener('click', sendCode);
+
+async function sendCode() {
+  if (!phoneValid()) return;
+  sendBtn.disabled = true; resendBtn.disabled = true;
+  showMessage(message, '<i class="fas fa-spinner fa-spin"></i> Sending verification code…', 'loading');
+  try {
+    const data = await api('/api/auth/phone/send-otp', { method: 'POST', body: JSON.stringify({ phone: fullPhone() }) });
+    otpBox.hidden = false; otpInput.focus();
+    otpInfo.textContent = `Enter the 6-digit code sent to ${data.phone}.`;
+    showMessage(message,
+      `<i class="fas fa-check-circle"></i> ${data.message}` +
+      (data.devMode ? ` <strong>(Test mode – no SMS provider set. Your code is ${data.devCode}.)</strong>` : ''), 'success');
+    startCooldown(data.resendIn || 60);
+  } catch (error) {
+    showMessage(message, `<i class="fas fa-exclamation-circle"></i> ${error.message}`, 'error');
+    sendBtn.disabled = !phoneValid(); resendBtn.disabled = false;
+  }
+}
+
+otpInput.addEventListener('input', () => {
+  otpInput.value = otpInput.value.replace(/\D/g, '').slice(0, 6);
+  verifyBtn.disabled = otpInput.value.length !== 6;
+  if (otpInput.value.length === 6) verifyBtn.click();
+});
+
+verifyBtn.addEventListener('click', async () => {
+  verifyBtn.disabled = true;
+  try {
+    const data = await api('/api/auth/phone/verify-otp', { method: 'POST', body: JSON.stringify({ phone: fullPhone(), code: otpInput.value }) });
+    setVerified(data.phone);
+    showMessage(message, '<i class="fas fa-circle-check"></i> Phone number verified. Complete the form to create your account.', 'success');
+  } catch (error) {
+    showMessage(message, `<i class="fas fa-exclamation-circle"></i> ${error.message}`, 'error');
+    verifyBtn.disabled = otpInput.value.length !== 6;
+  }
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!form.reportValidity()) return;
+  if (!verifiedPhone) { showMessage(message, '<i class="fas fa-exclamation-circle"></i> Please verify your phone number first.', 'error'); return; }
+
+  const selectedYear = Number(admissionYearInput.value);
+  const expectedLevel = expectedLevelForYear(selectedYear);
+  const actualLevel = String(levelInput.value || '').trim();
+  const regNumber = String($('registrationNumber').value || '').trim();
+  const expectedPrefix = expectedRegPrefixForYear(selectedYear);
+  const regPrefixMatches = !!expectedPrefix && regNumber.replace(/[^0-9]/g, '').startsWith(expectedPrefix);
+
+  if (!expectedLevel || actualLevel !== expectedLevel) {
+    showMessage(message, `<i class="fas fa-exclamation-circle"></i> level does not match admission year. Current year is ${currentYear}`, 'error');
+    return;
+  }
+
+  if (!expectedPrefix || !regPrefixMatches) {
+    showMessage(message, `<i class="fas fa-exclamation-circle"></i> Registration number does not match admission year. For ${selectedYear}, registration must start with ${expectedPrefix || 'the expected prefix'}.`, 'error');
+    return;
+  }
+
+  submitBtn.disabled = true;
+  showMessage(message, '<i class="fas fa-spinner fa-spin"></i> Creating your account…', 'loading');
+  const body = {
+    fullName: $('fullName').value, registrationNumber: regNumber, email: $('email').value,
+    phoneNumber: verifiedPhone, course: $('course').value, admissionYear: selectedYear, level: actualLevel, password: $('password').value
+  };
+  try {
+    const data = await api('/api/auth/student/register', { method: 'POST', body: JSON.stringify(body) });
+    location.href = data.redirect;
+  } catch (error) {
+    showMessage(message, `<i class="fas fa-exclamation-circle"></i> ${error.message}`, 'error');
+    // if the server no longer trusts the verification (expired), ask again
+    if (/verify your phone/i.test(error.message)) { phoneInput.readOnly = false; resetVerification(); sendBtn.disabled = !phoneValid(); }
+    else refreshSubmit();
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Department of Data Science | University of Uyo</title>
+<meta name="description" content="The Department of Data Science at the University of Uyo offers a B.Sc. Honours degree training the next generation of data scientists in Nigeria.">
+<meta name="theme-color" content="#0B1D3A">
+<link rel="icon" type="image/jpeg" href="logo.jpg">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="intro-overlay" id="introOverlay">
+    <div class="intro-content">
+      <div class="intro-logo-wrap">
+        <img src="logo.jpg" alt="DSSA Logo" class="intro-logo">
+        <div class="intro-ring ring1"></div>
+        <div class="intro-ring ring2"></div>
+        <div class="intro-ring ring3"></div>
+      </div>
+      <div class="intro-dept">Department of Data Science</div>
+      <div class="intro-uni">University of Uyo</div>
+      <div class="intro-bar"></div>
+    </div>
+  </div>
+
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <header id="mainHeader">
+    <nav class="main-nav">
+      <a href="index.html" class="logo-wrap">
+        <img src="logo.jpg" alt="DSSA Logo" class="logo-spin" id="headerLogo">
+        <div class="logo-text">
+          <span class="logo-main">Data Science</span>
+          <div class="logo-divider">
+            <img src="uniuyo-logo.png" alt="University of Uyo" class="header-crest">
+            <span class="logo-sub">University of Uyo</span>
+          </div>
+        </div>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="nav-active"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a href="programs.html"><i class="fas fa-book-open"></i> Programs</a></li>
+        <li><a href="staff.html"><i class="fas fa-users"></i> Staff</a></li>
+        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </nav>
+  </header>
+
+  <div class="ticker-wrap">
+    <div><i class="fas fa-bullhorn"></i> NOTICE</div>
+    <div class="ticker-track">
+      <div class="ticker-content">
+        &nbsp;&nbsp;&nbsp; 2025/2026 First Semester course registration is now open &mdash; complete within two weeks of resumption &nbsp;&nbsp;&bull;&nbsp;&nbsp; Big Data Computing seminar holds this week for 300L students &nbsp;&nbsp;&bull;&nbsp;&nbsp; SIWES placement for 300L students begins next semester &nbsp;&nbsp;&bull;&nbsp;&nbsp; Data Science Student's Association annual induction coming soon &nbsp;&nbsp;&bull;&nbsp;&nbsp; Welcome to the Department of Data Science, Faculty of Computing, University of Uyo &nbsp;&nbsp;&nbsp;
+      </div>
+    </div>
+  </div>
+
+  <section class="banner" id="banner">
+    <canvas class="particle-canvas" id="particleCanvas"></canvas>
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+      <div class="eyebrow"><i class="fas fa-university"></i> Faculty of Computing, University of Uyo</div>
+      <h1 class="typing-headline"><span id="typingText"></span><span class="typing-cursor">|</span></h1>
+      <p>Training the next generation of data scientists with the analytical and technical skills to solve real-world challenges across Nigeria and beyond.</p>
+      <div class="banner-buttons">
+        <a href="register.html" class="btn-primary ripple-btn"><i class="fa-solid fa-user-plus"></i> Sign Up</a>
+        <a href="learning-area-access.html" class="btn-outline ripple-btn"><i class="fa-solid fa-right-to-bracket"></i> Log In</a>
+        <a href="programs.html" class="btn-outline ripple-btn"><i class="fa-solid fa-book-open-reader"></i> Explore Programs</a>
+      </div>
+    </div>
+    <div class="banner-dots" id="bannerDots"></div>
+  </section>
+
+  <div class="quicklinks">
+    <a href="https://admissions.uniuyo.edu.ng" target="_blank" rel="noopener noreferrer" class="qlink accent ripple-btn"><i class="fa-solid fa-pen-fancy"></i> Apply Now</a>
+    <a href="programs.html" class="qlink ripple-btn"><i class="fa-solid fa-book-open-reader"></i> Programs</a>
+  </div>
+
+  <section class="vision fade-in">
+    <div class="section-container">
+      <h2><i class="fas fa-eye vision-icon"></i> Our Vision</h2>
+      <p>To produce graduates equipped with the analytical, statistical, and computational skills to harness data for innovation, research, and sustainable development across Nigeria and beyond.</p>
+    </div>
+  </section>
+
+  <section class="news fade-in">
+    <div class="section-container">
+      <h2 class="section-heading"><i class="fas fa-newspaper"></i> Latest News</h2>
+      <div class="news-list" id="public-news-list">
+        <div class="news-item">
+          <span class="news-date"><i class="fas fa-calendar-alt"></i> 15 AUG</span>
+          <span class="news-text">Departmental Seminar Series — Session 1<br>📍 Faculty of Computing Auditorium | 10:00 AM</span>
+        </div>
+        <div class="news-item">
+          <span class="news-date"><i class="fas fa-calendar-alt"></i> 02 SEP</span>
+          <span class="news-text">B.Sc. Final Year Project Presentation<br>📍 Data Science Lab | 9:00 AM – 5:00 PM</span>
+        </div>
+        <div class="news-item">
+          <span class="news-date"><i class="fas fa-calendar-alt"></i> 20 SEP</span>
+          <span class="news-text">Industry Guest Lecture — AI in Nigerian FinTech<br>📍 Faculty Lecture Hall 1 | 2:00 PM</span>
+        </div>
+        <div class="news-item">
+          <span class="news-text">Announcements</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about fade-in">
+    <div class="section-container about-grid">
+      <div class="about-text">
+        <div class="section-eyebrow">
+          <div class="eyebrow-line"></div>
+          <span class="eyebrow-text">Who We Are</span>
+        </div>
+        <h2 class="section-title">Shaping Tomorrow's Data Scientists</h2>
+        <p>The Department of Data Science at the University of Uyo offers a Bachelor of Science (Honours) degree, training students in statistics, machine learning, big data, and computational sciences across a four-year programme.</p>
+        <p>Our curriculum blends theory with hands-on practice, from Fundamentals of Data Science in year one through to Final Year Projects, Cloud Application Development, and Intelligent Computing for Urban Centres in the final year.</p>
+        <div class="about-features">
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+            <div class="feature-text">
+              <strong>Research Opportunities</strong>
+              <span>Engage in cutting edge research projects.</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-briefcase"></i></div>
+            <div class="feature-text">
+              <strong>Career Ready</strong>
+              <span>SIWES placement and industry-aligned curriculum from year one.</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-handshake"></i></div>
+            <div class="feature-text">
+              <strong>Industry Connections</strong>
+              <span>Partnerships supporting internships and graduate placement.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual">
+        <img src="IMG_5425.jpeg" alt="Department of Data Science" class="about-visual-img">
+      </div>
+    </div>
+  </section>
+
+  <section class="highlights fade-in">
+    <div class="section-container">
+      <div class="highlights-header">
+        <div class="section-eyebrow">
+          <div class="eyebrow-line"></div>
+          <span class="eyebrow-text">What We Offer</span>
+        </div>
+        <h2 class="section-title">Programme Highlights</h2>
+      </div>
+      <div class="cards-grid">
+        <div class="card glass-card">
+          <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h3>B.Sc. Data Science</h3>
+          <p>A four-year honours degree covering statistics, machine learning, big data, and visualization.</p>
+        </div>
+        <div class="card glass-card">
+          <div class="card-icon"><i class="fas fa-microscope"></i></div>
+          <h3>Research Opportunities</h3>
+          <p>Engage in cutting edge research projects with faculty mentorship.</p>
+        </div>
+        <div class="card glass-card">
+          <div class="card-icon"><i class="fas fa-briefcase"></i></div>
+          <h3>Career Ready</h3>
+          <p>SIWES placement and industry-aligned curriculum prepare graduates from day one.</p>
+        </div>
+        <div class="card glass-card">
+          <div class="card-icon"><i class="fas fa-cloud"></i></div>
+          <h3>Modern Curriculum</h3>
+          <p>Cloud computing, intelligent systems, and data warehousing in the final year.</p>
+        </div>
+        <div class="card glass-card">
+          <div class="card-icon"><i class="fas fa-handshake"></i></div>
+          <h3>Industry Partnerships</h3>
+          <p>Connections supporting internships and direct graduate placement.</p>
+        </div>
+        <div class="card glass-card">
+          <div class="card-icon"><i class="fas fa-trophy"></i></div>
+          <h3>Specializations</h3>
+          <p>Data Engineering, Business Analytics, Machine Learning, Big Data, and more.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery fade-in">
+    <div class="section-container">
+      <div class="section-eyebrow">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">Department Life</span>
+      </div>
+      <h2 class="section-title">Our Students</h2>
+      <div class="gallery-grid">
+        <img src="banner1.jpg" alt="Data Science students" class="tall gallery-img">
+        <img src="banner2.jpg" alt="Data Science students" class="gallery-img">
+        <img src="banner3.jpg" alt="Data Science students" class="gallery-img">
+        <img src="banner4.jpg" alt="Data Science students" class="wide gallery-img">
+      </div>
+    </div>
+  </section>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="Gallery photo">
+    <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+  </div>
+
+  <section class="stats" id="statsSection">
+    <div class="stat">
+      <span class="stat-number counter" data-target="4" data-suffix="+">0</span>
+      <span class="stat-label"><i class="fas fa-calendar-alt"></i> Years Programme</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">B.Sc.</span>
+      <span class="stat-label"><i class="fas fa-scroll"></i> Honours Degree</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number counter" data-target="200" data-suffix="+">0</span>
+      <span class="stat-label"><i class="fas fa-user-graduate"></i> Students Enrolled</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number counter" data-target="9" data-suffix="">0</span>
+      <span class="stat-label"><i class="fas fa-sitemap"></i> Specialization Fields</span>
+    </div>
+  </section>
+
+  <section class="hod-section fade-in">
+    <div class="section-container hod-grid">
+      <div class="hod-photo-wrap">
+        <img src="samuel s.png" alt="Dr. Uduak D. George" class="hod-photo-img">
+      </div>
+      <div class="hod-text">
+        <div class="section-eyebrow">
+          <div class="eyebrow-line"></div>
+          <span class="eyebrow-text">From the HOD's Desk</span>
+        </div>
+        <blockquote class="hod-quote">"The Department of Data Science is committed to producing graduates who are not only technically sound but also equipped with the analytical mindset to solve real problems facing Nigeria and the world."</blockquote>
+        <div class="hod-name">Dr. Uduak D. George</div>
+        <div class="hod-title"><i class="fas fa-chalkboard-teacher"></i> Head of Department, Data Science</div>
+        <div class="hod-title"><i class="fas fa-university"></i> University of Uyo</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="timeline-section fade-in">
+    <div class="section-container">
+      <div class="section-eyebrow" style="justify-content:center;">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">Our Journey</span>
+      </div>
+      <h2 class="section-title" style="text-align:center;">Department History</h2>
+      <div class="timeline">
+        <div class="timeline-item left fade-in">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year"><i class="fas fa-flag"></i> Oct 1991</div>
+            <h3>University Founded</h3>
+            <p>The University of Uyo was established when the Federal Government took over the defunct University of Cross River State, Uyo.</p>
+          </div>
+        </div>
+        <div class="timeline-item right fade-in">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year"><i class="fas fa-star"></i> Oct 2023</div>
+            <h3>Department Born</h3>
+            <p>The 128th Senate Meeting approved the unbundling of Computer Science into five new departments including Data Science on October 4, 2023.</p>
+          </div>
+        </div>
+        <div class="timeline-item left fade-in">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year"><i class="fas fa-user-tie"></i> Dec 2023</div>
+            <h3>Pioneer HOD Appointed</h3>
+            <p>Dr. Samuel S. Udoh was appointed as the pioneer Head of Department on December 7, 2023.</p>
+          </div>
+        </div>
+        <div class="timeline-item right fade-in">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year"><i class="fas fa-user-graduate"></i> 2024</div>
+            <h3>First Students Registered</h3>
+            <p>The pioneer set of B.Sc. Data Science students registered and began their academic journey at UNIUYO.</p>
+          </div>
+        </div>
+        <div class="timeline-item left fade-in">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year"><i class="fas fa-exchange-alt"></i> 2025</div>
+            <h3>New HOD Appointed</h3>
+            <p>Dr. Uduak D. George became Head of Department, continuing the mission of academic excellence.</p>
+          </div>
+        </div>
+        <div class="timeline-item right fade-in">
+          <div class="timeline-dot active-dot"></div>
+          <div class="timeline-content active-content">
+            <div class="timeline-year"><i class="fas fa-rocket"></i> 2026</div>
+            <h3>Growing Strong</h3>
+            <p>200+ students enrolled, growing curriculum, and a bright future ahead for Data Science at UNIUYO.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials fade-in">
+    <div class="section-container">
+      <div class="section-eyebrow" style="justify-content:center;">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">Student Voices</span>
+      </div>
+      <h2 class="section-title" style="text-align:center;">What Our Students Say</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-text">"The Department of Data Science has given me skills I never imagined. Every course connects directly to real-world application and I feel truly prepared."</div>
+          <div class="testimonial-author"><i class="fas fa-user-graduate"></i> Data Science Student, 200 Level</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-text">"Coming into 100 Level, I had no idea what data science was. Now I understand Python, statistics, and database technology. The foundation is solid."</div>
+          <div class="testimonial-author"><i class="fas fa-user-graduate"></i> Data Science Student, 100 Level</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-text">"Being part of the pioneer set of this department is something I am proud of every day. We are truly building something great at UNIUYO."</div>
+          <div class="testimonial-author"><i class="fas fa-user-graduate"></i> Data Science Student, 200 Level</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section fade-in">
+    <div class="section-container">
+      <div class="section-eyebrow" style="justify-content:center;">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">Got Questions?</span>
+      </div>
+      <h2 class="section-title" style="text-align:center;">Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question"><i class="fas fa-question-circle"></i> How do I apply to study Data Science at UNIUYO? <span class="faq-icon"><i class="fas fa-plus"></i></span></button>
+          <div class="faq-answer"><p>Apply through JAMB using the UTME. You need five O Level credit passes including English Language, Mathematics, and Physics, plus two other science subjects. You must also sit the post-UTME screening test. UTME subjects: English, Mathematics, Physics, and Chemistry.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question"><i class="fas fa-question-circle"></i> What is SIWES and when does it happen? <span class="faq-icon"><i class="fas fa-plus"></i></span></button>
+          <div class="faq-answer"><p>SIWES stands for Students Industrial Work Experience Scheme. It is a four-month industrial training programme in 300 Level Second Semester. Every student must complete it in a Data-oriented or computer related industry or establishment.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question"><i class="fas fa-question-circle"></i> What jobs can I get with a B.Sc. Data Science? <span class="faq-icon"><i class="fas fa-plus"></i></span></button>
+          <div class="faq-answer"><p>Graduates can work in Data Engineering, Data Mining, Business Analytics, Machine Learning, Data Visualization, Big Data Analytics, and Managerial Data Science in banking, healthcare, government, tech companies, or as an independent consultant.</p></div>
+        </div>
+         <div class="faq-item">
+          <button class="faq-question"><i class="fas fa-question-circle"></i> How do I access the student Learning Area? <span class="faq-icon"><i class="fas fa-plus"></i></span></button>
+          <div class="faq-answer"><p>Click Student Portal in the navigation or quick links. Register using your official university registration number and set a password. Once registered, log in anytime to access course materials and your full course structure.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question"><i class="fas fa-question-circle"></i> Can I apply through Direct Entry? <span class="faq-icon"><i class="fas fa-plus"></i></span></button>
+          <div class="faq-answer"><p>Yes. Direct Entry candidates can qualify with two A Level passes in science subjects including Mathematics, an NCE with merit pass in Mathematics, a Diploma in Data Processing, or an ND/HND lower credit in relevant fields with NCE merit pass in Mathematics, Statistics, or Computer Science.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faculty-context fade-in">
+    <div class="section-container faculty-grid">
+      <div>
+        <div class="section-eyebrow">
+          <div class="eyebrow-line"></div>
+          <span class="eyebrow-text">Our Home</span>
+        </div>
+        <h2 class="section-title">Faculty of Computing</h2>
+        <p style="color:var(--gray);line-height:1.85;font-size:0.95rem;">The Department of Data Science sits within the Faculty of Computing at the University of Uyo. The Faculty houses five departments: Computer Science, Cyber Security, Data Science, Information Systems, and Software Engineering, all unbundled in October 2023 to reflect the growing importance of computing disciplines in modern society.</p>
+        <a href="about.html" class="btn-primary ripple-btn" style="display:inline-block;margin-top:1.3rem;text-decoration:none;"><i class="fas fa-history"></i> Read Our History</a>
+      </div>
+      <div class="faculty-right">
+        <img src="uniuyo-logo.png" alt="University of Uyo" class="faculty-crest">
+        <div class="faculty-stats">
+          <div class="faculty-stat">
+            <span class="faculty-stat-num">5</span>
+            <span class="faculty-stat-label"><i class="fas fa-building"></i> Departments in Faculty</span>
+          </div>
+          <div class="faculty-stat">
+            <span class="faculty-stat-num">2023</span>
+            <span class="faculty-stat-label"><i class="fas fa-calendar-check"></i> Year Dept. Founded</span>
+          </div>
+          <div class="faculty-stat">
+            <span class="faculty-stat-num">15</span>
+            <span class="faculty-stat-label"><i class="fas fa-university"></i> Faculties at UNIUYO</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mission-banner">
+    <div class="section-container">
+      <i class="fas fa-quote-left mission-quote-icon"></i>
+      <p class="mission-text">To attract students and furnish them with data analytic skills required to decipher hidden information from data to guide intelligent decision making in business, government, healthcare, schools, industries, and other fields of human operations.</p>
+      <div class="mission-source"><i class="fas fa-landmark"></i> Department of Data Science &mdash; Mission Statement</div>
+    </div>
+  </section>
+
+  <section class="cta fade-in">
+    <h2>Ready to Begin Your Data Science Journey?</h2>
+    <p>Explore our programme requirements and find out how to apply.</p>
+    <a href="programs.html" class="btn-primary ripple-btn"><i class="fas fa-arrow-right"></i> View Admission Requirements</a>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo.jpg" alt="DSSA Logo" class="footer-logo-img">
+        <img src="uniuyo-logo.png" alt="UNIUYO" class="footer-uniuyo-logo">
+        <div>
+          <div class="footer-logo">Department of Data Science</div>
+          <div class="footer-logo-sub">University of Uyo</div>
+        </div>
+      </div>
+      <ul class="footer-links">
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a href="programs.html"><i class="fas fa-book-open"></i> Programs</a></li>
+        <li><a href="staff.html"><i class="fas fa-users"></i> Staff</a></li>
+        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+      <div class="footer-social">
+        <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    <div class="footer-copy"><i class="fas fa-copyright"></i> Department of Data Science, Faculty of Computing, University of Uyo. All rights reserved.</div>
+  </footer>
+
+  <div class="progress-ring-wrap" id="progressRingWrap">
+    <svg class="progress-ring" viewBox="0 0 50 50">
+      <circle class="progress-ring-bg" cx="25" cy="25" r="20"/>
+      <circle class="progress-ring-fill" id="progressRingFill" cx="25" cy="25" r="20"/>
+    </svg>
+    <button class="progress-ring-btn" id="progressRingBtn" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "uniuyo-data-science-portal",
+  "version": "3.1.0",
+  "private": true,
+  "description": "Integrated Data Science portal with public website, admin/student dashboards, external live links and an authenticated Zoom-style WebRTC classroom.",
+  "main": "server.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "check": "node --check server.js && node --check lib/db.js && node --check lib/live.js && node --check routes/admin.js && node --check routes/student.js && node --check routes/auth.js && node --check routes/live.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "multer": "^2.2.0",
+    "socket.io": "^4.8.3"
+  }
+}
